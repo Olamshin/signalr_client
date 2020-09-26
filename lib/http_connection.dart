@@ -266,6 +266,8 @@ class HttpConnection implements IConnection {
       }
     }
 
+    _options.headers?.forEach((name, value) {headers.setHeaderValue(name, value);});
+
     final negotiateUrl = _resolveNegotiateUrl(url);
     _logger?.finer("Sending negotiation request: $negotiateUrl");
     try {

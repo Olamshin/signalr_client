@@ -1,4 +1,7 @@
+import 'dart:collection';
+
 import 'package:logging/logging.dart';
+import 'package:signalr_client/ihub_protocol.dart';
 
 import 'itransport.dart';
 import 'signalr_http_client.dart';
@@ -6,6 +9,8 @@ import 'signalr_http_client.dart';
 /// Options provided to the 'withUrl' method on HubConnectionBuilder to configure options for the HTTP-based transports.
 class HttpConnectionOptions {
   // Properties
+  /// Headers that will be added to negotiation requests
+  HashMap<String, String> headers;
 
   /// An SignalRHttpClient that will be used to make HTTP requests.
   SignalRHttpClient httpClient;
@@ -37,13 +42,15 @@ class HttpConnectionOptions {
 
   // Methods
   HttpConnectionOptions(
-      {SignalRHttpClient httpClient,
+      {HashMap<String, String> headers,
+        SignalRHttpClient httpClient,
       Object transport,
       Logger logger,
       AccessTokenFactory accessTokenFactory,
       bool logMessageContent = false,
       bool skipNegotiation = false})
-      : this.httpClient = httpClient,
+      : this.headers = headers,
+        this.httpClient = httpClient,
         this.transport = transport,
         this.logger = logger,
         this.accessTokenFactory = accessTokenFactory,
